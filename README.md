@@ -1,5 +1,2 @@
-# Vue 3 + Vite
-
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+# *Podium*
+This project is a web-based race results management system developed using **Vue.js** for the frontend, with **JavaScript**, **HTML**, and **CSS** for interface implementation. The backend integrates **Firebase** for authentication and cloud services, and **MySQL** for structured data storage and management.
