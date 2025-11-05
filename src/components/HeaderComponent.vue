@@ -41,21 +41,21 @@ onMounted(() => {
             </svg>
           </a>
         </li>
-        <li><a href="../App.vue" class="logo">Podium</a></li>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Categories</a></li>
-        <li><a href="#">Forum</a></li>
-        <li><a href="#">Login</a></li>
+        <li><router-link to="/" class="logo">Podium</router-link></li>
+        <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/about">About</router-link></li>
+        <li><router-link to="/categories">Categories</router-link></li>
+        <li><router-link to="/forum">Forum</router-link></li>
+        <li><router-link to="/login">Login</router-link></li>
       </ul>
 
       <ul>
-        <li><a href="../App.vue" class="logo">Podium</a></li>
-        <li class="hideOnMobile"><a href="#">Home</a></li>
-        <li class="hideOnMobile"><a href="#">About Us</a></li>
-        <li class="hideOnMobile"><a href="#">Categories</a></li>
-        <li class="hideOnMobile"><a href="#">Forum</a></li>
-        <li class="hideOnMobile"><a href="#">Login</a></li>
+        <li><router-link to="/" class="logo">Podium</router-link></li>
+        <li class="hideOnMobile"><router-link to="/">Home</router-link></li>
+        <li class="hideOnMobile"><router-link to="/about">About Us</router-link></li>
+        <li class="hideOnMobile"><router-link to="/categories">Categories</router-link></li>
+        <li class="hideOnMobile"><router-link to="/forum">Forum</router-link></li>
+        <li class="hideOnMobile"><router-link to="/login">Login</router-link></li>
         <li class="menu-button" @click="showSidebar()">
           <a href="#">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
