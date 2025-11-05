@@ -1,6 +1,4 @@
 <script setup>
-import { onMounted } from 'vue'
-import "../styles/styleNav.css"
 
 const showSidebar = () => {
   const sidebar = document.querySelector('.sidebar')
@@ -11,20 +9,6 @@ const hideSidebar = () => {
   const sidebar = document.querySelector('.sidebar')
   if (sidebar) sidebar.style.display = 'none'
 }
-
-onMounted(() => {
-  const navLinks = document.querySelectorAll('nav a')
-
-  navLinks.forEach(link => {
-    link.addEventListener('mousemove', e => {
-      const rect = link.getBoundingClientRect()
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
-      link.style.setProperty('--x', `${x}px`)
-      link.style.setProperty('--y', `${y}px`)
-    })
-  })
-})
 </script>
 
 <template>
@@ -70,3 +54,93 @@ onMounted(() => {
     </nav>
   </div>
 </template>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+nav {
+    background-color: #1E1E1E;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+nav li {
+    height: 50px;
+}
+
+nav a {
+    height: 100%;
+    padding: 0 30px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+nav a:hover {
+    background-color: rgb(62, 62, 62);
+}
+
+nav li:first-child {
+    margin-right: auto;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 250px;
+    z-index: 999;
+    background-color: rgb(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.sidebar li {
+    width: 100%;
+}
+
+.sidebar a {
+    width: 100%;
+}
+
+.menu-button {
+    display: none;
+}
+
+@media(max-width: 70rem) {
+    .hideOnMobile {
+        display: none;
+    }
+
+    .menu-button {
+        display: block;
+    }
+}
+
+@media(max-width: 500px) {
+    .sidebar {
+        width: 100%;
+    }
+}
+</style>

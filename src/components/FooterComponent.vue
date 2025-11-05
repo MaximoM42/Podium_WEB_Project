@@ -1,7 +1,4 @@
-<script setup>
-import "../styles/styleFooter.css"
-
-</script>
+<script setup></script>
 
 <template>  
     <footer class="footer">
@@ -29,3 +26,79 @@ import "../styles/styleFooter.css"
     </footer>
 </template>
 
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+    
+body{
+    top: 10rem;
+    font-family: 'Times New Roman', Times, serif;
+    text-transform: capitalize;
+}
+
+.container{
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.footer {
+    background-color: #1E1E1E;
+    padding: 3rem 0 0 0;
+}
+
+.footer-row{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.footer-links{
+    width: 25%;
+    padding: 0 3rem;
+}
+
+.footer-links h4{
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 2rem;
+    font-weight: 500;
+    border-bottom: 0.2rem solid #ff00dd;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.footer-links ul li a{
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: white;
+    display: block;
+    margin-bottom: 1rem;
+    transition: all .3s ease;
+}
+
+.footer-links ul li a:hover{
+    color: white;
+    padding-left: 0.5rem;
+}
+
+.icon{
+    color: white;
+    display: inline-block;
+    margin: 0 0.5rem;
+    transition: all .3s ease;
+}
+
+@media(max-width:70rem){
+    .footer-row {
+        text-align: center;
+    }
+
+    .footer-links {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+}
+</style>

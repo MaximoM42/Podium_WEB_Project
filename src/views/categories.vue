@@ -1,13 +1,16 @@
+<script setup>
+import Header from "../components/HeaderComponent.vue"  
+import Footer from "../components/footercomponent.vue" 
+</script>
+
 <template>
+  <Header />
   <div class="categories-container">
     <h1>Categories</h1>
     <p>Página de categorías</p>
   </div>
+  <Footer />
 </template>
-
-<script setup>
-// Lógica de categorías
-</script>
 
 <style scoped>
 .categories-container {
