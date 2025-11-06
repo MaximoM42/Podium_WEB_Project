@@ -43,7 +43,7 @@ onMounted(() => {
         </li>
         <li><router-link to="/" class="logo">Podium</router-link></li>
         <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/about">About</router-link></li>
+        <li><router-link to="/carreras">Carreras</router-link></li>
         <li><router-link to="/categories">Categories</router-link></li>
         <li><router-link to="/forum">Forum</router-link></li>
         <li><router-link to="/login">Login</router-link></li>
@@ -52,7 +52,7 @@ onMounted(() => {
       <ul>
         <li><router-link to="/" class="logo">Podium</router-link></li>
         <li class="hideOnMobile"><router-link to="/">Home</router-link></li>
-        <li class="hideOnMobile"><router-link to="/about">About Us</router-link></li>
+        <li class="hideOnMobile"><router-link to="/carreras">Carreras</router-link></li>
         <li class="hideOnMobile"><router-link to="/categories">Categories</router-link></li>
         <li class="hideOnMobile"><router-link to="/forum">Forum</router-link></li>
         <li class="hideOnMobile"><router-link to="/login">Login</router-link></li>

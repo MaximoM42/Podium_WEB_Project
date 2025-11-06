@@ -8,20 +8,7 @@
 // Definir constante de acceso
 define('PODIUM_ACCESS', true);
 
-// Configuración de errores (cambiar en producción)
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Configuración de sesiones
-ini_set('session.cookie_httponly', 1);
-ini_set('session.use_strict_mode', 1);
-ini_set('session.cookie_secure', 0); // Cambiar a 1 en HTTPS
-session_start();
-
-// Zona horaria
-date_default_timezone_set('America/Argentina/Buenos_Aires');
-
+// ⚠️ IMPORTANTE: Configuración de CORS debe ir ANTES de cualquier output
 // Configuración de CORS (para Vue.js)
 header('Access-Control-Allow-Origin: http://localhost:5173'); // URL de Vue dev server
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
@@ -33,6 +20,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
+
+// Configuración de errores (cambiar en producción)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Zona horaria
+date_default_timezone_set('America/Argentina/Buenos_Aires');
+
+// Configuración de sesiones (DESPUÉS de los headers CORS)
+ini_set('session.cookie_httponly', 1);
+ini_set('session.use_strict_mode', 1);
+ini_set('session.cookie_secure', 0); // Cambiar a 1 en HTTPS
+ini_set('session.cookie_samesite', 'None'); // Permitir cookies cross-origin
+session_start();
 
 // Configuración de la aplicación
 define('APP_NAME', 'PODIUM');
