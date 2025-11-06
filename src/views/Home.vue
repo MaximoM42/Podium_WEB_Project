@@ -1,6 +1,6 @@
 <script setup>
 import Header from "../components/HeaderComponent.vue"  
-import Footer from "../components/footercomponent.vue"  
+import Footer from "../components/FooterComponent.vue"  
 </script>
 
 <template>
@@ -14,7 +14,7 @@ import Footer from "../components/footercomponent.vue"
           tracking, and analyzing races. Designed with both administrators and participants in mind, it offers clear interfaces, real-time results, and comprehensive performance insights. Whether you're 
           managing a local event or a professional racing series, Podium ensures accuracy, transparency, and ease of use—so you can focus on what truly matters: the race itself.
         </p>
-        <router-link to="/categories">See Results</router-link>
+        <router-link to="/categories">See Categories</router-link>
       </div>
     </div>
   </div>

@@ -129,7 +129,7 @@ const login = () => {
 
 .input-box svg{
     position: absolute;
-    right: 100px;
+    right: 60px;
     transform: translateY(+100%);
 }
 

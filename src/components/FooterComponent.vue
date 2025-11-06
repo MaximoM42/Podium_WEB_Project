@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import { useRouter } from 'vue-router';
+</script>
 
 <template>  
     <footer class="footer">
@@ -7,9 +9,9 @@
                 <div class="footer-links">
                     <h4>About</h4>
                     <ul>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Privacy policies</a></li>
-                        <li><a href="#">Copyright</a></li>
+                        <li><router-link to="/about">Services</router-link></li>
+                        <li><router-link to="/about">Privacy policies</router-link></li>
+                        <li><router-link to="/about">Copyright</router-link></li>
                     </ul>
                 </div>
 
@@ -63,6 +65,7 @@ body{
 .footer-links h4{
     font-size: 2rem;
     color: white;
+    margin-top: 1rem;
     margin-bottom: 2rem;
     font-weight: 500;
     border-bottom: 0.2rem solid #ff00dd;

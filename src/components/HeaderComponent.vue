@@ -1,4 +1,31 @@
 <script setup>
+import { onMounted, ref } from 'vue';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { useRouter } from 'vue-router'; 
+
+const isLoggedIn = ref(false);
+const router = useRouter();
+let auth;
+
+onMounted(() => {
+  auth = getAuth();
+  
+  onAuthStateChanged(auth, (user) => {
+      if (user) {
+        isLoggedIn.value = true;
+      } else {
+        isLoggedIn.value = false;
+      }
+  });
+});
+
+const handleSignOut = () => {
+  signOut(auth).then(() => {
+    console.log("Sesión cerrada.");
+    router.push('/login');
+  });
+};
+
 
 const showSidebar = () => {
   const sidebar = document.querySelector('.sidebar')
@@ -17,20 +44,16 @@ const hideSidebar = () => {
       <ul class="sidebar">
         <li @click="hideSidebar()">
           <a href="#">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                 width="24px" fill="#e3e3e3">
-              <path
-                d="m256-200-56-56 224-224-224-224 56-56 224 224
-                   224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" /></svg>
           </a>
         </li>
-        <li><router-link to="/" class="logo">Podium</router-link></li>
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/about">About</router-link></li>
         <li><router-link to="/categories">Categories</router-link></li>
-        <li><router-link to="/forum">Forum</router-link></li>
-        <li><router-link to="/login">Login</router-link></li>
+        <li v-if="isLoggedIn"><router-link to="/forum">Forum</router-link></li>
+        
+        <li v-if="!isLoggedIn"><router-link to="/login">Login</router-link></li>
+        <li v-if="isLoggedIn"><a href="#" @click.prevent="handleSignOut">Logout</a></li>
       </ul>
 
       <ul>
@@ -38,17 +61,13 @@ const hideSidebar = () => {
         <li class="hideOnMobile"><router-link to="/">Home</router-link></li>
         <li class="hideOnMobile"><router-link to="/about">About Us</router-link></li>
         <li class="hideOnMobile"><router-link to="/categories">Categories</router-link></li>
-        <li class="hideOnMobile"><router-link to="/forum">Forum</router-link></li>
-        <li class="hideOnMobile"><router-link to="/login">Login</router-link></li>
+        <li class="hideOnMobile" v-if="isLoggedIn"><router-link to="/forum">Forum</router-link></li>
+        
+        <li class="hideOnMobile" v-if="!isLoggedIn"><router-link to="/login">Login</router-link></li>
+        <li class="hideOnMobile" v-if="isLoggedIn"><a href="#" @click.prevent="handleSignOut">Logout</a></li>
+
         <li class="menu-button" @click="showSidebar()">
-          <a href="#">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                 width="24px" fill="#e3e3e3">
-              <path
-                d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Z
-                   m0-200v-80h720v80H120Z" />
-            </svg>
-          </a>
+          <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" /></svg></a>
         </li>
       </ul>
     </nav>
