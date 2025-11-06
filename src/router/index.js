@@ -4,7 +4,7 @@ import Categories from "../views/categories.vue";
 import Forum from "../views/forum.vue";
 import Login from "../views/login.vue";
 import About from "../views/about.vue";
-import Signup from "../views/signup.vue";
+import Register from "../views/register.vue";
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -30,14 +30,14 @@ const router = createRouter({
 			component: Login,
 		},
 		{
-			path: "/",
+			path: "/About",
 			name: "About",
 			component: About,
 		},
 		{
-			path: "/",
-			name: "Signup",
-			component: Signup,
+			path: "/Register",
+			name: "Register",
+			component: Register,
 		},
 	]
 });

@@ -1,3 +1,8 @@
+<script setup>
+  import Header from "../components/HeaderComponent.vue"  
+  import Footer from "../components/FooterComponent.vue" 
+</script>
+
 <template>
     <Header />
     <div class="categories-container">
@@ -6,12 +11,9 @@
     </div>
     
     <Footer />
-  </template>
+</template>
   
-  <script setup>
-  import Header from "../components/HeaderComponent.vue"  
-  import Footer from "../components/FooterComponent.vue" 
-  </script>
+  
   
   <style scoped>
   .categories-container {

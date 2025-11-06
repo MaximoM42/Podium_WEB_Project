@@ -25,7 +25,7 @@ import Footer from "../components/footercomponent.vue"
 <style>
 body{
     min-height: 100vh;
-    background-image: url("../public/background2.png");
+    background-image: url("../background2.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
