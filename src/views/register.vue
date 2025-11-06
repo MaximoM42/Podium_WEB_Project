@@ -12,7 +12,7 @@ const register = () => {
     createUserWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((data) => {
         console.log("Succesfully registered!");
-        router.push("/forum");
+        router.push("/forum"); // se va a forum como para ir a algun lugar
     })
     .catch((error) => {
         console.log(error.code);
