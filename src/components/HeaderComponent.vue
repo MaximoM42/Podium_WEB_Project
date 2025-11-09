@@ -50,7 +50,6 @@ const hideSidebar = () => {
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/about">About</router-link></li>
         <li><router-link to="/categories">Categories</router-link></li>
-        <li v-if="isLoggedIn"><router-link to="/forum">Forum</router-link></li>
         
         <li v-if="!isLoggedIn"><router-link to="/login">Login</router-link></li>
         <li v-if="isLoggedIn"><a href="#" @click.prevent="handleSignOut">Logout</a></li>
@@ -61,7 +60,6 @@ const hideSidebar = () => {
         <li class="hideOnMobile"><router-link to="/">Home</router-link></li>
         <li class="hideOnMobile"><router-link to="/about">About Us</router-link></li>
         <li class="hideOnMobile"><router-link to="/categories">Categories</router-link></li>
-        <li class="hideOnMobile" v-if="isLoggedIn"><router-link to="/forum">Forum</router-link></li>
         
         <li class="hideOnMobile" v-if="!isLoggedIn"><router-link to="/login">Login</router-link></li>
         <li class="hideOnMobile" v-if="isLoggedIn"><a href="#" @click.prevent="handleSignOut">Logout</a></li>
