@@ -17,7 +17,7 @@ const login = () => {
     .then((data) => {
         console.log("Succesfully signed in!");
         console.log(auth.currentUser); 
-        router.push("/forum"); // se va a forum como para ir a algun lugar
+        router.push("/"); 
     })
     .catch((error) => {
         console.log(error.code);
