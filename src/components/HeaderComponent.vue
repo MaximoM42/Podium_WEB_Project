@@ -146,7 +146,7 @@ nav li:first-child {
     display: none;
 }
 
-@media(max-width: 70rem) {
+@media(max-width: 50rem) {
     .hideOnMobile {
         display: none;
     }

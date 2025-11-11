@@ -94,14 +94,14 @@ body{
     transition: all .3s ease;
 }
 
-@media(max-width:70rem){
+@media(max-width:50rem){
     .footer-row {
         text-align: center;
     }
 
     .footer-links {
         width: 100%;
-        margin-bottom: 30px;
+        margin-bottom: 1.5rem;
     }
 }
 </style>
