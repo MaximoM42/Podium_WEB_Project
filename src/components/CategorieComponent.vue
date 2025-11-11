@@ -1,36 +1,15 @@
 <script setup>
-/* 
-    Logica de carga de categorias, en un principio se tendria que hardcodear y despues estar automatizado,
-    las categorias se tendrian que levantar de la bd y despues ser cargadas.
-*/
-const categories = [
-    {
-        title: "TC",
-        name: "Turismo Carretera",
-        src: "/tc.jpg",
-        rtr: "#", //router
-    },
-    {
-        title: "TCP",
-        name: "Turismo Carretera Pista",
-        src: "/tcp.jpg",
-        rtr: "#", //router
-    },
-    {
-        title: "TCPK",
-        name: "Turismo Carretera Pick Ups",
-        src: "/tcpk.jpg",
-        rtr: "#", //router
-    },
-]
+import { getCategories } from '../composables/getCategories'; 
+
+const { categories } = getCategories();
 </script>
 
 <template>
     <div class="card-container">
-        <div class="card" v-for="category in categories" :key="category.title">
+        <div class="card" v-for="category in categories" :key="category.id">
             <img :src="category.src" :alt="category.name">
             <div class="card-content">
-                <h2>{{ category.title }}</h2>
+                <h2>{{ category.id }}</h2>
                 <p>{{ category.name }}</p>
                 <router-link :to="category.rtr" class="btn">See Races</router-link>
             </div>

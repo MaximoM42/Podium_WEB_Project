@@ -4,6 +4,7 @@ import Categories from "../views/categories.vue";
 import Login from "../views/login.vue";
 import About from "../views/about.vue";
 import Register from "../views/register.vue";
+import Races from "../views/races.vue";
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -32,6 +33,11 @@ const router = createRouter({
 			path: "/Register",
 			name: "Register",
 			component: Register,
+		},
+		{
+			path: "/categories/:id",
+			name: "Races",
+			component: Races,
 		},
 	]
 });

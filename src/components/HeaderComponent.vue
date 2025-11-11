@@ -101,6 +101,7 @@ nav li {
 }
 
 nav a {
+    width: auto;
     height: 100%;
     padding: 0 30px;
     text-decoration: none;
