@@ -56,10 +56,6 @@ const login = () => {
         <div class="error-message">
           <p v-if="errMsg">{{ errMsg }}</p><br>
         </div>
-        <div class="remember-forgot">
-          <label for=""><input type="checkbox">Remember me</label>
-          <a href="#">Forgot password?</a>
-        </div>
         
         <button @click.prevent="login" class="log-btn">Login</button>
         

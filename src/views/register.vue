@@ -62,7 +62,7 @@ const register = () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 80vh;
 }
 
 .wrapper{
@@ -106,7 +106,7 @@ const register = () => {
 
 .input-box svg{
     position: absolute;
-    right: 100px;
+    right: 60px;
     transform: translateY(+100%);
 }
 
