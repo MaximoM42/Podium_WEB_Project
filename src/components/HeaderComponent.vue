@@ -1,23 +1,10 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { useRouter } from 'vue-router'; 
+import { useRouter } from 'vue-router';
+import { signOut } from 'firebase/auth';
+import { useAuth } from '../composables/useAuth';
 
-const isLoggedIn = ref(false);
+const { isLoggedIn, isAdmin, auth } = useAuth();
 const router = useRouter();
-let auth;
-
-onMounted(() => {
-  auth = getAuth();
-  
-  onAuthStateChanged(auth, (user) => {
-      if (user) {
-        isLoggedIn.value = true;
-      } else {
-        isLoggedIn.value = false;
-      }
-  });
-});
 
 const handleSignOut = () => {
   signOut(auth).then(() => {
@@ -50,6 +37,7 @@ const hideSidebar = () => {
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/about">About</router-link></li>
         <li><router-link to="/categories">Categories</router-link></li>
+        <li v-if="isLoggedIn && isAdmin()"><router-link to="/admin">Admin</router-link></li>
         
         <li v-if="!isLoggedIn"><router-link to="/login">Login</router-link></li>
         <li v-if="isLoggedIn"><a href="#" @click.prevent="handleSignOut">Logout</a></li>
@@ -60,6 +48,7 @@ const hideSidebar = () => {
         <li class="hideOnMobile"><router-link to="/">Home</router-link></li>
         <li class="hideOnMobile"><router-link to="/about">About Us</router-link></li>
         <li class="hideOnMobile"><router-link to="/categories">Categories</router-link></li>
+        <li class="hideOnMobile" v-if="isLoggedIn && isAdmin()"><router-link to="/admin">Admin</router-link></li>
         
         <li class="hideOnMobile" v-if="!isLoggedIn"><router-link to="/login">Login</router-link></li>
         <li class="hideOnMobile" v-if="isLoggedIn"><a href="#" @click.prevent="handleSignOut">Logout</a></li>

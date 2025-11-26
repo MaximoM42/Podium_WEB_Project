@@ -1,0 +1,32 @@
+<IfModule mod_headers.c>
+    # Habilitar CORS - IMPORTANTE: Solo aquí, no duplicar en PHP
+    Header always set Access-Control-Allow-Origin "http://localhost:5173"
+    Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+    Header always set Access-Control-Allow-Credentials "true"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /backend/
+    
+    # NO redirigir archivos de test (acceso directo)
+    RewriteCond %{REQUEST_URI} ^/backend/(test-.*\.php|cors-check\.php|test-.*\.html)$ [NC]
+    RewriteRule ^ - [L]
+    
+    # Redirigir todo al index.php (excepto archivos y directorios existentes)
+    # Las peticiones OPTIONS se manejan en index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+
+# Prevenir acceso a archivos sensibles
+<FilesMatch "^(config\.php|database\.php)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Ocultar listado de directorios
+Options -Indexes
+

@@ -3,23 +3,13 @@ import "./style.css";
 import App from "./App.vue";
 import router from "./router";
 
-
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { firebaseConfig } from "./config/firebase";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCIOZRPQrE4lYptmOttZxjoq32kRkpvbpo",
-  authDomain: "podium-19f2e.firebaseapp.com",
-  projectId: "podium-19f2e",
-  storageBucket: "podium-19f2e.firebasestorage.app",
-  messagingSenderId: "899048605481",
-  appId: "1:899048605481:web:3c33246fd2f953dfced938",
-  measurementId: "G-SSQRYLYC6D"
-};
-
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
 
 createApp(App).use(router).mount("#app");
 /*

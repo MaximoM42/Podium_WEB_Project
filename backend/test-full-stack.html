@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Full Stack - Vue + PHP</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .test-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        .test-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .status {
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .warning { background: #fff3cd; color: #856404; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        .loading { background: #e2e3e5; color: #383d41; }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            display: block;
+            margin: 20px auto;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 3px;
+        }
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏁 Test Full Stack: Vue.js + PHP + MySQL</h1>
+        
+        <div class="test-section">
+            <h2>📊 Estado de los Servicios</h2>
+            <div id="services-status"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>🔄 Test de Comunicación Frontend ↔ Backend</h2>
+            <div id="communication-test"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>📡 Test de Endpoints del API</h2>
+            <div id="api-test"></div>
+        </div>
+
+        <button onclick="runFullTest()">🚀 Ejecutar Test Completo</button>
+
+        <div class="test-section">
+            <h2>📝 Checklist de Configuración</h2>
+            <ul class="checklist" id="checklist"></ul>
+        </div>
+
+        <div class="test-section">
+            <h2>ℹ️ Información Importante</h2>
+            <div class="info status">
+                <strong>¿Cómo funciona la comunicación?</strong>
+                <div class="code-block" style="margin-top:10px;">
+// Frontend Vue (JavaScript en el navegador)
+const response = await fetch('http://localhost/backend/categories');
+const data = await response.json();
+
+// ↓ HTTP Request (Internet)
+
+// Backend PHP (Servidor Apache)
+$stmt = $db->query("SELECT * FROM categories");
+echo json_encode(['categories' => $stmt->fetchAll()]);
+
+// ↓ Respuesta JSON
+
+// Frontend recibe los datos
+console.log(data.categories);
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost/backend';
+
+        async function checkService(name, url, description) {
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                return {
+                    name,
+                    status: response.ok ? 'success' : 'error',
+                    message: response.ok ? `✅ ${description} - OK` : `❌ ${description} - Error ${response.status}`,
+                    details: data
+                };
+            } catch (error) {
+                return {
+                    name,
+                    status: 'error',
+                    message: `❌ ${description} - ${error.message}`,
+                    details: null
+                };
+            }
+        }
+
+        async function runFullTest() {
+            // Test 1: Servicios
+            const servicesDiv = document.getElementById('services-status');
+            servicesDiv.innerHTML = '<div class="loading status">⏳ Verificando servicios...</div>';
+
+            const serviceTests = [
+                { name: 'Apache', url: `${API_URL}`, desc: 'Servidor Apache' },
+                { name: 'API', url: `${API_URL}/categories`, desc: 'API PHP' },
+                { name: 'MySQL', url: `${API_URL}/test-simple.php`, desc: 'Base de Datos' }
+            ];
+
+            let servicesHTML = '<h3>Estado de los Servicios:</h3>';
+            for (const test of serviceTests) {
+                const result = await checkService(test.name, test.url, test.desc);
+                servicesHTML += `<div class="${result.status} status">${result.message}</div>`;
+            }
+            servicesDiv.innerHTML = servicesHTML;
+
+            // Test 2: Comunicación
+            const commDiv = document.getElementById('communication-test');
+            commDiv.innerHTML = '<div class="loading status">⏳ Probando comunicación...</div>';
+
+            const endpoints = [
+                { url: '/categories', desc: 'Categorías' },
+                { url: '/vehicles', desc: 'Vehículos' },
+                { url: '/races', desc: 'Carreras' }
+            ];
+
+            let commHTML = '<h3>Pruebas de Comunicación:</h3>';
+            for (const endpoint of endpoints) {
+                const result = await checkService(endpoint.desc, API_URL + endpoint.url, endpoint.desc);
+                commHTML += `<div class="${result.status} status">${result.message}</div>`;
+                if (result.details) {
+                    const count = result.details.categories?.length || 
+                                  result.details.vehicles?.length || 
+                                  result.details.races?.length || 0;
+                    commHTML += `<div class="info status" style="margin-left:20px;">📦 Registros encontrados: ${count}</div>`;
+                }
+            }
+            commDiv.innerHTML = commHTML;
+
+            // Test 3: Endpoints del API
+            const apiDiv = document.getElementById('api-test');
+            apiDiv.innerHTML = '<div class="loading status">⏳ Probando endpoints...</div>';
+
+            const apiTests = [
+                { url: '/categories', expected: 200, desc: 'GET Categories' },
+                { url: '/users/current', expected: 401, desc: 'GET Users (Protected)' },
+                { url: '/invalid', expected: 404, desc: 'GET Invalid Route' }
+            ];
+
+            let apiHTML = '<h3>Códigos HTTP:</h3>';
+            for (const test of apiTests) {
+                try {
+                    const response = await fetch(API_URL + test.url);
+                    const isCorrect = response.status === test.expected;
+                    const statusClass = isCorrect ? 'success' : 'error';
+                    apiHTML += `<div class="${statusClass} status">
+                        ${isCorrect ? '✅' : '❌'} ${test.desc}: ${response.status} 
+                        ${isCorrect ? '(Correcto)' : `(Esperado: ${test.expected})`}
+                    </div>`;
+                } catch (error) {
+                    apiHTML += `<div class="error status">❌ ${test.desc}: ${error.message}</div>`;
+                }
+            }
+            apiDiv.innerHTML = apiHTML;
+
+            // Checklist
+            updateChecklist();
+        }
+
+        function updateChecklist() {
+            const checklistDiv = document.getElementById('checklist');
+            const items = [
+                { step: 1, text: 'Apache corriendo en XAMPP', check: true },
+                { step: 2, text: 'MySQL corriendo en XAMPP', check: true },
+                { step: 3, text: 'Backend en C:\\xampp\\htdocs\\backend', check: true },
+                { step: 4, text: 'Frontend con npm run dev', check: false },
+                { step: 5, text: 'Base de datos "podium" importada', check: true },
+                { step: 6, text: 'CORS configurado', check: true },
+                { step: 7, text: 'Códigos HTTP correctos', check: true }
+            ];
+
+            checklistDiv.innerHTML = items.map(item => `
+                <li class="${item.check ? 'success' : 'warning'} status">
+                    <span class="step-number">${item.step}</span>
+                    ${item.check ? '✅' : '⏳'} ${item.text}
+                </li>
+            `).join('');
+        }
+
+        // Ejecutar al cargar
+        window.onload = () => {
+            updateChecklist();
+        };
+    </script>
+</body>
+</html>
+

@@ -1,32 +1,60 @@
-import { computed } from 'vue';
-// Importamos los datos brutos de nuestro archivo de "base de datos"
-import { races as allRaces, positions as allPositions } from '../data/database';
+import { ref, watch, onMounted } from 'vue';
+import { raceService } from '../services/raceService';
 
 // Este composable acepta un 'ref' o 'computed' del categoryId como argumento
 export const useRaceData = (categoryId) => {
+    const racesWithPositions = ref([]);
+    const loading = ref(true);
+    const error = ref(null);
 
-    // Usamos una propiedad computada. Esto es muy potente: si el categoryId cambia,
-    // Vue automáticamente recalculará esta variable y actualizará la vista.
-    const racesWithPositions = computed(() => {
-        // 1. Filtramos las carreras para obtener solo las de la categoría actual.
-        // Usamos categoryId.value porque el argumento es un 'ref' o 'computed'.
-        const filteredRaces = allRaces.filter(race => race.categoryId === categoryId.value);
+    const fetchRaces = async () => {
+        if (!categoryId.value) return;
+        
+        try {
+            loading.value = true;
+            error.value = null;
+            
+            const response = await raceService.getByCategoryWithPositions(categoryId.value);
+            
+            // Transformar los datos del API al formato que espera el componente
+            racesWithPositions.value = response.races.map(race => ({
+                id: race.id,
+                categoryId: race.category_id,
+                name: race.name,
+                location: race.location,
+                dateR: race.date, // Formatear fecha si es necesario
+                status: race.status,
+                positions: race.positions.map(pos => ({
+                    position: pos.position,
+                    nick: pos.driver_name,
+                    vehicleName: pos.vehicle_name || 'N/A',
+                    time: pos.time_seconds,
+                    points: pos.points
+                }))
+            }));
+        } catch (err) {
+            console.error("Error al cargar carreras:", err);
+            error.value = "Error al cargar las carreras";
+            racesWithPositions.value = [];
+        } finally {
+            loading.value = false;
+        }
+    };
 
-        // 2. Mapeamos sobre las carreras filtradas para añadirles sus posiciones.
-        return filteredRaces.map(race => {
-            // Para cada carrera, filtramos todas las posiciones para encontrar las suyas.
-            const racePositions = allPositions.filter(pos => pos.raceId === race.id);
+    // Observar cambios en categoryId y recargar datos
+    watch(categoryId, () => {
+        fetchRaces();
+    }, { immediate: true });
 
-            // Devolvemos un nuevo objeto combinando la carrera con sus posiciones.
-            return {
-                ...race,
-                positions: racePositions
-            };
-        });
+    onMounted(() => {
+        fetchRaces();
     });
 
     // El composable devuelve la data ya procesada y lista para usar.
     return {
-        racesWithPositions
+        racesWithPositions,
+        loading,
+        error,
+        refetch: fetchRaces
     };
 }

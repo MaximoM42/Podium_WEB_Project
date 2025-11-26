@@ -5,6 +5,7 @@ import Header from "../components/HeaderComponent.vue"
 import { ref } from "vue";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"; 
 import { useRouter } from 'vue-router';
+import { userService } from "../services/userService";
 
 const email = ref("");
 const password = ref("");
@@ -12,28 +13,39 @@ const errMsg = ref("");
 const router = useRouter();
 const auth = getAuth(); 
 
-const login = () => {
-  signInWithEmailAndPassword(auth, email.value, password.value) 
-    .then((data) => {
-        console.log("Succesfully signed in!");
-        console.log(auth.currentUser); 
-        router.push("/"); 
-    })
-    .catch((error) => {
-        console.log(error.code);
-        switch(error.code){
-          case "auth/invalid-email":  errMsg.value = "Invalid email.";
-                                      break;
-          case "auth/user-not-found": errMsg.value = "No account with that email was found.";
-                                      break;
-          case "auth/wrong-password": errMsg.value = "Incorrect password.";
-                                      break;
-          case "auth/invalid-credential": errMsg.value = "Email or password was incorrect.";
-                                      break;
-          default:  errMsg.value =    "Email or password was incorrect.";
-                                      break;                      
-        }
-    })
+const login = async () => {
+  try {
+    const data = await signInWithEmailAndPassword(auth, email.value, password.value);
+    console.log("Successfully signed in!");
+    
+    // Sincronizar con MySQL
+    try {
+      await userService.createOrUpdate(data.user.uid, data.user.email);
+    } catch (dbError) {
+      console.error("Error al sincronizar con base de datos:", dbError);
+    }
+    
+    router.push("/"); 
+  } catch (error) {
+    console.log(error.code);
+    switch(error.code){
+      case "auth/invalid-email":  
+        errMsg.value = "Invalid email.";
+        break;
+      case "auth/user-not-found": 
+        errMsg.value = "No account with that email was found.";
+        break;
+      case "auth/wrong-password": 
+        errMsg.value = "Incorrect password.";
+        break;
+      case "auth/invalid-credential": 
+        errMsg.value = "Email or password was incorrect.";
+        break;
+      default:  
+        errMsg.value = "Email or password was incorrect.";
+        break;                      
+    }
+  }
 };
 </script>
 
